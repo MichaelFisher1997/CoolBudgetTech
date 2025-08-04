@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  astro-store:
+    build:
+      context: .
+      target: production
+    ports:
+      - "4321:4321"
+    environment:
+      - NODE_ENV=production
+      # Required environment variables - set these in Coolify UI
+      - SNIPCART_API_KEY=${SNIPCART_API_KEY}
+      - PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+      - PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - SITE_NAME=${SITE_NAME:-Astro E-commerce Store}
+      - DEFAULT_LANG=${DEFAULT_LANG:-en}
+      - DEFAULT_CURRENCY=${DEFAULT_CURRENCY:-USD}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4321"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "coolify.managed=true"
+      - "coolify.name=astro-store"
+      - "coolify.description=Astro E-commerce Store"
+      - "coolify.domain=${COOLIFY_DOMAIN:-localhost}"
+    # No volumes for production - build is static
+    # No stdin/tty for production
