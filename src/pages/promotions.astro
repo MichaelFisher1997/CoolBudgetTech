@@ -1,0 +1,326 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+---
+
+<DefaultLayout title="Promotions & Deals - CoolBudgetTech" showSidebar={false}>
+  <div class="bg-white dark:bg-gray-900">
+    <!-- Hero Section -->
+    <div class="relative isolate px-6 pt-14 lg:px-8">
+      <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+      </div>
+      
+      <div class="mx-auto max-w-4xl py-16 sm:py-24">
+        <div class="text-center">
+          <div class="mb-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+              🔥 Limited Time Offers
+            </span>
+          </div>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+            Amazing Deals & Promotions
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            Don't miss out on our best deals! Save big on quality tech and music gear with our exclusive promotions and seasonal sales.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Promotions -->
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 pb-16">
+      <!-- Flash Sale Banner -->
+      <div class="mb-12 bg-gradient-to-r from-red-600 to-pink-600 rounded-2xl p-8 text-center text-white">
+        <div class="mx-auto max-w-2xl">
+          <h2 class="text-3xl font-bold mb-4">⚡ Flash Sale - 48 Hours Only!</h2>
+          <p class="text-xl mb-6">Up to 50% off selected items</p>
+          
+          <!-- Countdown Timer -->
+          <div class="flex justify-center space-x-4 mb-6">
+            <div class="bg-white bg-opacity-20 rounded-lg p-3 min-w-[60px]">
+              <div class="text-2xl font-bold" id="hours">23</div>
+              <div class="text-sm">Hours</div>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg p-3 min-w-[60px]">
+              <div class="text-2xl font-bold" id="minutes">45</div>
+              <div class="text-sm">Minutes</div>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg p-3 min-w-[60px]">
+              <div class="text-2xl font-bold" id="seconds">32</div>
+              <div class="text-sm">Seconds</div>
+            </div>
+          </div>
+          
+          <a href="/products" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-red-600 bg-white hover:bg-gray-50">
+            Shop Flash Sale
+          </a>
+        </div>
+      </div>
+
+      <!-- Promotion Categories -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 mb-16">
+        <!-- Weekly Deals -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900 dark:to-indigo-900 rounded-lg p-6">
+          <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center mb-4">
+              <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Weekly Deals</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">New deals every week with up to 30% off</p>
+            <span class="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">Save up to 30%</span>
+          </div>
+        </div>
+
+        <!-- Clearance Sale -->
+        <div class="bg-gradient-to-br from-orange-50 to-red-100 dark:from-orange-900 dark:to-red-900 rounded-lg p-6">
+          <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-orange-600 rounded-full flex items-center justify-center mb-4">
+              <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Clearance Sale</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">Last chance items at incredible prices</p>
+            <span class="inline-block bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium">Save up to 70%</span>
+          </div>
+        </div>
+
+        <!-- Bundle Offers -->
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900 dark:to-emerald-900 rounded-lg p-6">
+          <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-green-600 rounded-full flex items-center justify-center mb-4">
+              <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Bundle Deals</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">Buy more, save more with our bundles</p>
+            <span class="inline-block bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">Save up to 25%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Deals -->
+      <div class="mb-16">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Featured Deals</h2>
+          <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            Hand-picked products with the biggest savings
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Deal 1 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <div class="h-48 bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">Product Image</span>
+                </div>
+              </div>
+              <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
+                -40%
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white">Wireless Bluetooth Headphones</h3>
+              <div class="mt-2 flex items-center space-x-2">
+                <span class="text-xl font-bold text-red-600">£29.99</span>
+                <span class="text-sm text-gray-500 line-through">£49.99</span>
+              </div>
+              <button class="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- Deal 2 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <div class="h-48 bg-gradient-to-br from-green-400 to-blue-600 flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">Product Image</span>
+                </div>
+              </div>
+              <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
+                -60%
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white">USB-C Cable 3-Pack</h3>
+              <div class="mt-2 flex items-center space-x-2">
+                <span class="text-xl font-bold text-red-600">£7.99</span>
+                <span class="text-sm text-gray-500 line-through">£19.99</span>
+              </div>
+              <button class="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- Deal 3 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">Product Image</span>
+                </div>
+              </div>
+              <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
+                -35%
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white">Portable Phone Stand</h3>
+              <div class="mt-2 flex items-center space-x-2">
+                <span class="text-xl font-bold text-red-600">£9.99</span>
+                <span class="text-sm text-gray-500 line-through">£14.99</span>
+              </div>
+              <button class="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- Deal 4 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="relative">
+              <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center">
+                  <span class="text-white text-sm font-medium">Product Image</span>
+                </div>
+              </div>
+              <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
+                -50%
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white">Mini Bluetooth Speaker</h3>
+              <div class="mt-2 flex items-center space-x-2">
+                <span class="text-xl font-bold text-red-600">£19.99</span>
+                <span class="text-sm text-gray-500 line-through">£39.99</span>
+              </div>
+              <button class="mt-4 w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter Signup for Deals -->
+      <div class="bg-indigo-50 dark:bg-indigo-900 rounded-2xl p-8">
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Never Miss a Deal!
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+            Subscribe to our newsletter and be the first to know about exclusive deals, flash sales, and new product launches. 
+            Plus, get 10% off your first order!
+          </p>
+          
+          <form class="max-w-md mx-auto">
+            <div class="flex space-x-2">
+              <input 
+                type="email" 
+                placeholder="Enter your email"
+                class="flex-1 rounded-md border-gray-300 py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                required
+              >
+              <button 
+                type="submit"
+                class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Subscribe
+              </button>
+            </div>
+            <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Terms and Conditions -->
+      <div class="mt-12 text-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          *Offers valid while supplies last. Cannot be combined with other offers. 
+          See <a href="/terms-and-conditions" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">terms and conditions</a> for details.
+        </p>
+      </div>
+    </div>
+  </div>
+</DefaultLayout>
+
+<script>
+  // Countdown timer functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    function updateCountdown() {
+      // Set target time (example: 24 hours from now)
+      const now = new Date().getTime();
+      const targetTime = now + (24 * 60 * 60 * 1000); // 24 hours from now
+      
+      function tick() {
+        const currentTime = new Date().getTime();
+        const timeLeft = targetTime - currentTime;
+        
+        if (timeLeft > 0) {
+          const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+          
+          const hoursEl = document.getElementById('hours');
+          const minutesEl = document.getElementById('minutes');
+          const secondsEl = document.getElementById('seconds');
+          
+          if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+          if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+          if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+        } else {
+          // Timer expired
+          const hoursEl = document.getElementById('hours');
+          const minutesEl = document.getElementById('minutes');
+          const secondsEl = document.getElementById('seconds');
+          
+          if (hoursEl) hoursEl.textContent = '00';
+          if (minutesEl) minutesEl.textContent = '00';
+          if (secondsEl) secondsEl.textContent = '00';
+        }
+      }
+      
+      // Update immediately
+      tick();
+      
+      // Update every second
+      setInterval(tick, 1000);
+    }
+    
+    updateCountdown();
+    
+    // Newsletter form submission
+    const newsletterForm = document.querySelector('form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = e.target.querySelector('input[type="email"]').value;
+        // In a real implementation, this would submit to your backend
+        alert(`Thank you for subscribing with ${email}! Check your email for your 10% discount code.`);
+        e.target.reset();
+      });
+    }
+    
+    // Add to cart functionality
+    const addToCartButtons = document.querySelectorAll('button:contains("Add to Cart")');
+    document.querySelectorAll('button').forEach(button => {
+      if (button.textContent.includes('Add to Cart')) {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          // In a real implementation, this would add the item to cart
+          alert('Product added to cart! (This is a demo)');
+        });
+      }
+    });
+  });
+</script>

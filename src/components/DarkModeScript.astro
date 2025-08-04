@@ -1,0 +1,51 @@
+<!-- 
+  Dark mode initialization script - prevents flash of wrong theme
+  This should be loaded immediately in the <head> before any content renders
+-->
+<script is:inline>
+  // Immediately check and apply dark mode to prevent flash
+  (function() {
+    try {
+      // Import and initialize nanostores
+      const initializeStores = () => {
+        if (typeof localStorage !== 'undefined') {
+          const savedLocale = localStorage.getItem('locale');
+          if (savedLocale) {
+            // We'll handle this in the React component
+          }
+          
+          const savedCurrency = localStorage.getItem('currency');
+          if (savedCurrency) {
+            // We'll handle this in the React component
+          }
+          
+          const savedDarkMode = localStorage.getItem('darkMode');
+          if (savedDarkMode !== null) {
+            // Apply class to document
+            if (savedDarkMode === 'true') {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          } else {
+            // Use system preference if no saved preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('darkMode', 'true');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('darkMode', 'false');
+            }
+          }
+        }
+      };
+      
+      initializeStores();
+    } catch (e) {
+      // Fallback to light mode if localStorage fails
+      console.warn('Dark mode initialization failed:', e);
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+</script>

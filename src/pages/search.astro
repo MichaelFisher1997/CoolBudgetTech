@@ -1,0 +1,52 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+
+// Get search query from URL
+const { query = '' } = Astro.url.searchParams;
+
+// Filter products based on search query
+const searchResults = query 
+  ? products.filter(product => 
+      product.name.toLowerCase().includes(query.toLowerCase()) || 
+      product.description.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase())
+    )
+  : products;
+---
+
+<DefaultLayout title="Search Results - Cool Budget Tech & Music Store">
+  <div class="bg-white dark:bg-gray-900">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Search Results</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg text-gray-500 dark:text-gray-300">
+          {query ? `Results for "${query}"` : 'All products'}
+        </p>
+      </div>
+      
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {searchResults.length} product{searchResults.length !== 1 ? 's' : ''} found
+        </h2>
+        
+        {searchResults.length > 0 ? (
+          <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {
+              searchResults.map((product) => (
+                <ProductCard product={product} />
+              ))
+            }
+          </div>
+        ) : (
+          <div class="mt-12 text-center">
+            <p class="text-lg text-gray-500 dark:text-gray-400">No products found matching your search.</p>
+            <a href="/" class="mt-4 inline-block text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Browse all products</a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+  
+</DefaultLayout>

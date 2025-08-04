@@ -1,0 +1,373 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Sidebar from '../components/Sidebar.astro';
+import DarkModeScript from '../components/DarkModeScript.astro';
+
+interface Props {
+  title?: string;
+  showSidebar?: boolean;
+}
+
+const { title = "CoolBudgetTech", showSidebar = true } = Astro.props;
+
+// Determine if we should show sidebar based on current URL
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === '/';
+const shouldShowSidebar = showSidebar && !isHomePage;
+---
+
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content="Astro v4.10.2" />
+    <title>{title}</title>
+    <meta name="description" content="Cool Budget Tech & Music Store - Affordable tech and music products" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://coolbudgettech.com/" />
+    <meta property="og:title" content="Cool Budget Tech & Music Store" />
+    <meta property="og:description" content="Affordable tech and music products" />
+    <meta property="og:image" content="https://placehold.co/1200x630/EEE/31343C?font=montserrat&text=Cool+Budget+Tech" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://coolbudgettech.com/" />
+    <meta property="twitter:title" content="Cool Budget Tech & Music Store" />
+    <meta property="twitter:description" content="Affordable tech and music products" />
+    <meta property="twitter:image" content="https://placehold.co/1200x600/EEE/31343C?font=montserrat&text=Cool+Budget+Tech" />
+    
+    <!-- Dark mode script - must be loaded before any content renders -->
+    <DarkModeScript />
+    
+    <!-- Snipcart -->
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.css" />
+    
+    <!-- Snipcart Settings -->
+    <script>
+      window.SnipcartSettings = {
+        publicApiKey: 'ZjMyNzlhMjEtYWMxZS00MWUxLWJlMWItZDY0YTA0NzAyMDhlNjM4ODk2OTE3NDM1MzkxNjQy',
+        loadStrategy: 'eager',
+        modalStyle: 'side',
+        currency: 'gbp',
+        version: '3.6.0'
+      };
+      console.log('Snipcart Settings:', window.SnipcartSettings);
+    </script>
+    <script src="https://cdn.snipcart.com/themes/v3.6.0/default/snipcart.js"></script>
+  </head>
+  <body class="h-full bg-gray-50 dark:bg-gray-900">
+    <Header />
+    
+    {shouldShowSidebar ? (
+      <div class="flex h-screen pt-0">
+        <Sidebar />
+        <main class="flex-1 overflow-y-auto bg-white dark:bg-gray-900">
+          <div class="p-6">
+            <slot />
+          </div>
+        </main>
+      </div>
+    ) : (
+      <main class="bg-white dark:bg-gray-900">
+        <slot />
+      </main>
+    )}
+    
+    <Footer />
+    
+    <!-- Snipcart Configuration -->
+    <div 
+      hidden 
+      id="snipcart" 
+      data-api-key="ZjMyNzlhMjEtYWMxZS00MWUxLWJlMWItZDY0YTA0NzAyMDhlNjM4ODk2OTE3NDM1MzkxNjQy"
+      data-config-modal-style="side"
+      data-config-add-product-behavior="none"
+      data-templates-url="/snipcart-templates.html"
+      data-currency="gbp"
+    ></div>
+    
+    <!-- Snipcart Custom Styles -->
+    <style>
+      /* Side cart modal positioning (for quick view only) */
+      .snipcart-layout {
+        font-family: inherit !important;
+        z-index: 9999999 !important;
+      }
+      
+      .snipcart-modal__container {
+        z-index: 9999999 !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+      }
+      
+      .snipcart-modal--side {
+        right: 0 !important;
+        top: 160px !important;
+        bottom: 0 !important;
+        max-width: 500px !important;
+        width: 100% !important;
+        height: calc(100vh - 160px) !important;
+        transform: translateX(100%) !important;
+        transition: transform 0.3s ease !important;
+        z-index: 9999999 !important;
+        position: fixed !important;
+      }
+      
+      .snipcart-modal--side.snipcart-modal--opened {
+        transform: translateX(0) !important;
+      }
+      
+      .snipcart-modal__backdrop {
+        z-index: 9999998 !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+      }
+      
+      /* Modal content spacing */
+      .snipcart-modal__content {
+        padding: 20px !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+      }
+      
+      .snipcart {
+        --color-default: #374151;
+        --color-alt: #6b7280;
+        --color-icon: #6366f1;
+        --color-link: #6366f1;
+        --color-link-hover: #4f46e5;
+        --color-success: #10b981;
+        --color-error: #ef4444;
+        --color-input: #ffffff;
+        --color-input-focus: #f3f4f6;
+        --bgColor-default: #ffffff;
+        --bgColor-alt: #f9fafb;
+        --bgColor-input: #ffffff;
+        --bgColor-success: #d1fae5;
+        --bgColor-error: #fee2e2;
+        --borderColor-default: #d1d5db;
+        --borderColor-error: #ef4444;
+        --font-family-default: inherit;
+        --font-size-badge: 0.75rem;
+        --font-size-default: 0.875rem;
+        --font-size-lg: 1rem;
+        --font-size-xl: 1.125rem;
+        --font-size-2xl: 1.25rem;
+        --font-weight-default: 400;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --border-radius: 0.375rem;
+        --border-radius-lg: 0.5rem;
+        --box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
+      
+      /* Form field improvements */
+      .snipcart input,
+      .snipcart select,
+      .snipcart textarea {
+        width: 100% !important;
+        padding: 0.75rem !important;
+        border: 1px solid var(--borderColor-default) !important;
+        border-radius: var(--border-radius) !important;
+        font-size: var(--font-size-default) !important;
+        background-color: var(--bgColor-input) !important;
+        color: var(--color-default) !important;
+      }
+      
+      .snipcart input:focus,
+      .snipcart select:focus,
+      .snipcart textarea:focus {
+        outline: none !important;
+        border-color: var(--color-link) !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+      }
+      
+      /* Button improvements */
+      .snipcart button {
+        padding: 0.75rem 1.5rem !important;
+        border-radius: var(--border-radius) !important;
+        font-weight: var(--font-weight-semibold) !important;
+        font-size: var(--font-size-default) !important;
+        transition: all 0.2s ease !important;
+      }
+      
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .snipcart {
+          --color-default: #f3f4f6;
+          --color-alt: #d1d5db;
+          --color-icon: #818cf8;
+          --color-link: #818cf8;
+          --color-link-hover: #a5b4fc;
+          --bgColor-default: #1f2937;
+          --bgColor-alt: #111827;
+          --bgColor-input: #374151;
+          --borderColor-default: #4b5563;
+        }
+      }
+      
+      html[class*="dark"] .snipcart {
+        --color-default: #f3f4f6;
+        --color-alt: #d1d5db;
+        --color-icon: #818cf8;
+        --color-link: #818cf8;
+        --color-link-hover: #a5b4fc;
+        --bgColor-default: #1f2937;
+        --bgColor-alt: #111827;
+        --bgColor-input: #374151;
+        --borderColor-default: #4b5563;
+      }
+      
+      /* Remove conflicting side modal styles since we're using default modal */
+      
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .snipcart-modal {
+          width: 95% !important;
+          top: 170px !important;
+          height: calc(100vh - 190px) !important;
+        }
+        
+        .snipcart-modal__content {
+          padding: 15px !important;
+        }
+        
+        .snipcart-layout {
+          padding: 10px !important;
+        }
+      }
+    </style>
+    
+    <!-- Global Auth Initialization -->
+    <script>
+      import { initializeAuth } from '../lib/auth-store.js';
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DefaultLayout: Initializing global auth');
+        initializeAuth();
+        
+        // Handle header cart button globally
+        const headerCartBtn = document.getElementById('header-cart-btn');
+        if (headerCartBtn) {
+          headerCartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Redirect to cart page instead of opening modal
+            window.location.href = '/cart';
+          });
+        }
+        
+        // Override all Snipcart checkout behaviors globally
+        document.addEventListener('snipcart.ready', () => {
+          console.log('Snipcart ready in DefaultLayout');
+          if (window.Snipcart && Snipcart.api) {
+            console.log('Snipcart API available:', !!Snipcart.api.modal);
+            console.log('Snipcart modal API available:', !!Snipcart.api.modal);
+            console.log('Snipcart cart API available:', !!Snipcart.api.cart);
+            console.log('Snipcart store available:', !!Snipcart.store);
+            
+            // Override checkout functions
+            if (Snipcart.api.checkout) {
+              Snipcart.api.checkout.open = function() {
+                window.location.href = '/checkout';
+              };
+            }
+          }
+        });
+        
+        // Listen for auth state changes to clear cart on logout
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'supabase.auth.token' && !e.newValue) {
+            // User logged out, clear cart
+            clearCartOnLogout();
+          }
+        });
+        
+        // Function to clear cart when user logs out
+        function clearCartOnLogout() {
+          console.log('User logged out, clearing cart');
+          if (window.Snipcart && Snipcart.api) {
+            try {
+              Snipcart.api.cart.clear();
+              console.log('Cart cleared successfully');
+            } catch (error) {
+              console.error('Error clearing cart:', error);
+            }
+          }
+          
+          // Also clear any session storage
+          sessionStorage.removeItem('cartData');
+        }
+        
+        // Prevent any checkout modal from opening
+        document.addEventListener('click', (e) => {
+          if (e.target.classList.contains('snipcart-checkout') || 
+              e.target.closest('.snipcart-checkout')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Wait for Snipcart to be ready before checking cart
+            if (window.Snipcart) {
+              if (Snipcart.api) {
+                handleCheckoutRedirect();
+              } else {
+                document.addEventListener('snipcart.ready', handleCheckoutRedirect);
+              }
+            } else {
+              // Fallback if Snipcart not loaded
+              window.location.href = '/cart';
+            }
+          }
+        }, true);
+        
+        function handleCheckoutRedirect() {
+          let items = [];
+          let total = 0;
+          
+          // Try to get items using the correct API method
+          try {
+            if (Snipcart.api.cart.items && Snipcart.api.cart.items.all) {
+              items = Snipcart.api.cart.items.all();
+            }
+          } catch (e) {
+            console.log('Error getting items for redirect:', e);
+          }
+          
+          // Get total from cart state
+          try {
+            const cartState = Snipcart.store.getState();
+            if (cartState.cart && cartState.cart.total) {
+              total = cartState.cart.total.amount || cartState.cart.total || 0;
+            }
+          } catch (e) {
+            console.log('Error getting total for redirect:', e);
+          }
+          
+          console.log('Cart items:', items.length, 'Total:', total);
+          
+          if (items.length > 0) {
+            sessionStorage.setItem('cartData', JSON.stringify({
+              items: items,
+              total: total,
+              currency: 'GBP'
+            }));
+            window.location.href = '/checkout';
+          } else {
+            window.location.href = '/cart';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

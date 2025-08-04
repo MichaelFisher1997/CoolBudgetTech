@@ -1,0 +1,117 @@
+---
+import type { Product } from '../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+// Default values for SSR
+const currencySymbol = '£';
+const convertedPrice = product.price;
+---
+
+<div class="group relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+  <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+    <img
+      src={product.image || `https://placehold.co/400x400/EEE/31343C?font=montserrat&text=${encodeURIComponent(product.name)}`}
+      alt={product.name}
+      class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+    />
+  </div>
+  <div class="mt-4 flex justify-between">
+    <div>
+      <h3 class="text-sm text-gray-700 dark:text-gray-300">
+        <a href={`/products/${product.slug}`}>
+          <span aria-hidden="true" class="absolute inset-0" />
+          {product.name}
+        </a>
+      </h3>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{product.category}</p>
+    </div>
+    <p class="text-sm font-medium text-gray-900 dark:text-white">
+      <span class="currency-symbol">{currencySymbol}</span><span class="price-amount" data-price={product.price}>{convertedPrice.toFixed(2)}</span>
+    </p>
+  </div>
+  <div class="mt-4">
+    <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{product.description}</p>
+  </div>
+  <div class="mt-6">
+    <button
+      class="snipcart-add-item w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200"
+      data-item-id={product.id}
+      data-item-name={product.name}
+      data-item-price={product.price}
+      data-item-url={`${Astro.url.origin}/products/${product.slug}`}
+      data-item-description={product.description}
+      data-item-image={product.image || `https://placehold.co/400x400/EEE/31343C?font=montserrat&text=${encodeURIComponent(product.name)}`}
+      data-item-categories={product.category}
+      data-item-weight="500"
+      data-item-length="20"
+      data-item-width="15"
+      data-item-height="10"
+      data-item-shippable="true"
+      data-item-taxable="true"
+    >
+      <svg class="inline w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+      </svg>
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<script>
+  // Currency conversion functionality
+  const currencySymbols = {
+    USD: '$',
+    EUR: '€',
+    GBP: '£'
+  };
+
+  const currencyRates = {
+    GBP: 1,
+    USD: 1.27,
+    EUR: 1.17
+  };
+
+  function convertPrice(price, targetCurrency) {
+    const rate = currencyRates[targetCurrency] || 1;
+    return Number((price * rate).toFixed(2));
+  }
+
+  function updateProductCardCurrency() {
+    const currentCurrency = localStorage.getItem('currency') || 'GBP';
+    const currentSymbol = currencySymbols[currentCurrency] || '£';
+    
+    // Update currency symbols
+    const symbolElements = document.querySelectorAll('.currency-symbol');
+    symbolElements.forEach(el => {
+      el.textContent = currentSymbol;
+    });
+    
+    // Update price amounts
+    const priceElements = document.querySelectorAll('.price-amount');
+    priceElements.forEach(el => {
+      const basePrice = parseFloat(el.dataset.price);
+      if (!isNaN(basePrice)) {
+        const convertedPrice = convertPrice(basePrice, currentCurrency);
+        el.textContent = convertedPrice.toFixed(2);
+      }
+    });
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    updateProductCardCurrency();
+    
+    // Listen for currency changes
+    window.addEventListener('currency-change', updateProductCardCurrency);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'currency') {
+        updateProductCardCurrency();
+      }
+    });
+  });
+</script>

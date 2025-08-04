@@ -1,0 +1,162 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/products';
+
+// Get all products with search functionality
+const searchTerm = Astro.url.searchParams.get('search') || '';
+const category = Astro.url.searchParams.get('category') || '';
+
+let filteredProducts = products;
+
+if (searchTerm) {
+  filteredProducts = products.filter(product => 
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+}
+
+if (category) {
+  filteredProducts = filteredProducts.filter(product => 
+    product.category.toLowerCase() === category.toLowerCase()
+  );
+}
+
+// Get unique categories for filter
+const categories = [...new Set(products.map(p => p.category))];
+---
+
+<DefaultLayout title="All Products - Cool Budget Tech & Music Store">
+  <!-- Breadcrumb -->
+  <nav class="flex mb-8" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-4">
+      <li>
+        <div>
+          <a href="/" class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="ml-4 text-sm font-medium text-gray-900 dark:text-white">All Products</span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">All Products</h1>
+    <p class="mt-2 text-lg text-gray-600 dark:text-gray-300">
+      {searchTerm ? `Search results for "${searchTerm}"` : `Discover all ${filteredProducts.length} products in our store`}
+    </p>
+  </div>
+
+  <!-- Filters and Sort -->
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center space-x-4">
+      <span class="text-sm text-gray-700 dark:text-gray-300">
+        {filteredProducts.length} products
+      </span>
+      {searchTerm && (
+        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+          Search: {searchTerm}
+          <button 
+            type="button" 
+            class="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-500 focus:bg-blue-500 focus:text-white focus:outline-none dark:hover:bg-blue-800"
+            onclick="window.location.href = '/products'"
+          >
+            <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+              <path stroke-linecap="round" stroke-width="1.5" d="m1 1 6 6m0-6L1 7" />
+            </svg>
+          </button>
+        </span>
+      )}
+    </div>
+    <div class="flex items-center space-x-4">
+      <select 
+        id="category-filter"
+        class="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      >
+        <option value="">All Categories</option>
+        {categories.map(cat => (
+          <option value={cat} selected={cat === category}>{cat}</option>
+        ))}
+      </select>
+      <select 
+        id="sort-select"
+        class="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      >
+        <option>Sort by: Featured</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Name: A to Z</option>
+        <option>Name: Z to A</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  {filteredProducts.length > 0 ? (
+    <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      {filteredProducts.map((product) => (
+        <ProductCard product={product} />
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-16">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No products found</h3>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        {searchTerm ? 'Try adjusting your search terms.' : 'No products match your current filters.'}
+      </p>
+      <div class="mt-6">
+        <button 
+          type="button" 
+          class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          onclick="window.location.href = '/products'"
+        >
+          View all products
+        </button>
+      </div>
+    </div>
+  )}
+</DefaultLayout>
+
+<script>
+  // Category filter functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const categoryFilter = document.getElementById('category-filter');
+    const sortSelect = document.getElementById('sort-select');
+
+    if (categoryFilter) {
+      categoryFilter.addEventListener('change', (e) => {
+        const category = e.target.value;
+        const url = new URL(window.location);
+        if (category) {
+          url.searchParams.set('category', category);
+        } else {
+          url.searchParams.delete('category');
+        }
+        window.location.href = url.toString();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (e) => {
+        const sortOption = e.target.value;
+        // This would need backend support for full functionality
+        console.log('Sort by:', sortOption);
+      });
+    }
+  });
+</script>

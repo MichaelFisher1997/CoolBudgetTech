@@ -1,0 +1,98 @@
+---
+import DefaultLayout from '../../layouts/DefaultLayout.astro';
+import AuthProvider from '../../components/auth/AuthProvider';
+import ProfileSettingsForm from '../../components/auth/ProfileSettingsForm';
+import AccountSidebar from '../../components/auth/AccountSidebar.astro';
+---
+
+<DefaultLayout title="Profile Settings - Cool Budget Tech & Music Store" showSidebar={false}>
+  <!-- Breadcrumb -->
+  <nav class="flex mb-8" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-4">
+      <li>
+        <div>
+          <a href="/" class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <a href="/account" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+            My Account
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="ml-4 text-sm font-medium text-gray-900 dark:text-white">Profile Settings</span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Profile Settings</h1>
+        <p class="mt-2 text-lg text-gray-600 dark:text-gray-300">
+          Manage your personal information and account settings
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 pb-16">
+        <!-- Sidebar Navigation -->
+        <div class="lg:col-span-1">
+          <AccountSidebar currentPage="settings" />
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <AuthProvider client:load>
+              <ProfileSettingsForm client:only="react" />
+            </AuthProvider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DefaultLayout>
+
+<script>
+  // Redirect if not logged in
+  import { userAtom, loadingAtom, initializeAuth } from '../../lib/auth-store';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Profile page: Initializing auth');
+    initializeAuth();
+    
+    // Check auth status periodically until auth is loaded
+    const checkAuth = () => {
+      const loading = loadingAtom.get();
+      const user = userAtom.get();
+      
+      console.log('Profile page: Auth check - loading:', loading, 'user:', !!user);
+      
+      if (!loading && !user) {
+        console.log('Profile page: No user found, redirecting to login');
+        window.location.href = '/auth/login';
+      } else if (!loading && user) {
+        console.log('Profile page: User authenticated:', user.email);
+      } else if (loading) {
+        console.log('Profile page: Still loading auth...');
+        setTimeout(checkAuth, 100);
+      }
+    };
+    
+    setTimeout(checkAuth, 100);
+  });
+</script>

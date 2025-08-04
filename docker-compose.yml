@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  astro-store:
+    build: .
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4321"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Optional: Add Supabase local development (if needed)
+  # Uncomment below to run Supabase locally for development
+  # supabase:
+  #   image: supabase/postgres:15.1.0.147
+  #   ports:
+  #     - "54322:5432"
+  #   environment:
+  #     POSTGRES_PASSWORD: your-super-secret-and-long-postgres-password
+  #     POSTGRES_DB: postgres
+  #   volumes:
+  #     - supabase_db_data:/var/lib/postgresql/data
+
+# volumes:
+#   supabase_db_data:

@@ -1,0 +1,30 @@
+# CoolBudgetTech Robots.txt
+# This file tells search engine crawlers which pages they can crawl on your site.
+
+User-agent: *
+Allow: /
+
+# Disallow private account pages
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /admin/
+
+# Allow important pages
+Allow: /products
+Allow: /categories
+Allow: /search
+Allow: /about
+Allow: /contact
+Allow: /faq
+Allow: /privacy-policy
+Allow: /terms-and-conditions
+Allow: /shipping-policy
+Allow: /returns-policy
+Allow: /cookies
+Allow: /promotions
+
+# Crawl delay (optional, adjust as needed)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://coolbudgettech.com/sitemap.xml

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Placeholder Images</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script>
+        // Create placeholder images with Canvas
+        function createPlaceholder(text, color, filename) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, 400, 400);
+            
+            // Add text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 200, 200);
+            
+            // Create download link
+            canvas.toBlob(function(blob) {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            });
+        }
+        
+        // Generate images with different colors for each view
+        const placeholders = [
+            { text: 'Main View', color: '#8B5CF6', filename: 'main.png' },
+            { text: 'Front View', color: '#10B981', filename: 'front.png' },
+            { text: 'Back View', color: '#F59E0B', filename: 'back.png' },
+            { text: 'Side View', color: '#EF4444', filename: 'side.png' },
+            { text: 'Detail 1', color: '#3B82F6', filename: 'detail1.png' },
+            { text: 'Detail 2', color: '#EC4899', filename: 'detail2.png' }
+        ];
+        
+        let index = 0;
+        function generateNext() {
+            if (index < placeholders.length) {
+                const placeholder = placeholders[index];
+                createPlaceholder(placeholder.text, placeholder.color, placeholder.filename);
+                index++;
+                setTimeout(generateNext, 1000); // 1 second delay between downloads
+            }
+        }
+        
+        // Start generating after page loads
+        setTimeout(generateNext, 1000);
+    </script>
+</body>
+</html>

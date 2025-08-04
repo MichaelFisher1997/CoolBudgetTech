@@ -1,0 +1,17 @@
+---
+import AuthLayout from '../../layouts/AuthLayout.astro';
+import LoginPage from '../../components/auth/LoginPage';
+---
+
+<AuthLayout title="Sign In - Cool Budget Tech & Music Store">
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+      Welcome Back
+    </h1>
+    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+      Sign in to your account to continue shopping
+    </p>
+  </div>
+
+  <LoginPage client:only="react" />
+</AuthLayout>

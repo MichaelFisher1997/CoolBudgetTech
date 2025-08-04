@@ -1,0 +1,594 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+---
+
+<DefaultLayout title="Checkout - CoolBudgetTech" showSidebar={false}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="mx-auto max-w-4xl px-4 pt-32 pb-8 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Checkout</h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-300">
+          Complete your purchase securely with Snipcart
+        </p>
+      </div>
+
+      <!-- Test Mode Notice -->
+      <div class="mb-8 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4">
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-yellow-600 dark:text-yellow-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
+          <div>
+            <span class="text-yellow-800 dark:text-yellow-200 font-medium">Test Mode Active</span>
+            <span class="text-yellow-700 dark:text-yellow-300 ml-2">- No real charges will be made</span>
+          </div>
+        </div>
+        <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
+          Use test card: <code class="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">4242 4242 4242 4242</code> with any future expiry date and any CVC.
+        </div>
+      </div>
+
+      <!-- Checkout Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Order Summary -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Order Summary</h2>
+          
+          <div id="checkout-items" class="space-y-4 mb-6">
+            <!-- Items will be populated here -->
+          </div>
+          
+          <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+            <div class="flex justify-between text-lg font-medium">
+              <span class="text-gray-900 dark:text-white">Total</span>
+              <span id="checkout-total" class="text-gray-900 dark:text-white">£0.00</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Payment Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Payment Details</h2>
+          
+          <form id="checkout-form" class="space-y-4">
+            <!-- Customer Information -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+              <input id="email-input" type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                <input id="first-name-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                <input id="last-name-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+              </div>
+            </div>
+            
+            <!-- Address Selection -->
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Shipping Address</h3>
+              
+              <!-- Address Options (hidden for now) -->
+              <div id="address-options" class="space-y-3 mb-4" style="display: none;">
+                <!-- Will be populated by JavaScript -->
+              </div>
+              
+              <!-- Manual Address Entry -->
+              <div id="manual-address" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Street Address</label>
+                  <input id="street-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">City</label>
+                    <input id="city-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Postal Code</label>
+                    <input id="postal-code-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">State/Region</label>
+                    <input id="state-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Country</label>
+                    <input id="country-input" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
+                  <input id="phone-input" type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Payment Method -->
+            <div class="mt-6">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Payment Method</h3>
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input type="radio" name="payment" value="card" checked class="mr-3">
+                  <span class="text-gray-700 dark:text-gray-300">Credit/Debit Card</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="radio" name="payment" value="paypal" class="mr-3">
+                  <span class="text-gray-700 dark:text-gray-300">PayPal</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Submit Button - Use Snipcart Checkout -->
+            <button type="button" onclick="proceedToSnipcartCheckout()" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-6">
+              Proceed to Payment
+            </button>
+          </form>
+        </div>
+      </div>
+
+            <!-- Alternative Actions -->
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+                <button 
+                  onclick="history.back()" 
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600"
+                >
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                  </svg>
+                  Continue Shopping
+                </button>
+                
+                <a 
+                  href="/cart" 
+                  class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600"
+                >
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path>
+                  </svg>
+                  View Cart
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Features -->
+      <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+          Why is our checkout secure?
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900">
+                <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-base font-medium text-gray-900 dark:text-white">SSL Encryption</h4>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                All payment data is encrypted with 256-bit SSL security
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-base font-medium text-gray-900 dark:text-white">PCI Compliant</h4>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                Meets the highest standards for payment processing
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900">
+                <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h4 class="text-base font-medium text-gray-900 dark:text-white">No Data Storage</h4>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                We never store your payment information
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accepted Payment Methods -->
+      <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+          Accepted Payment Methods
+        </h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="h-10 w-16 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold">VISA</div>
+          <div class="h-10 w-16 bg-red-600 rounded text-white text-xs flex items-center justify-center font-bold">MC</div>
+          <div class="h-10 w-16 bg-blue-500 rounded text-white text-xs flex items-center justify-center font-bold">AMEX</div>
+          <div class="h-10 w-16 bg-blue-400 rounded text-white text-xs flex items-center justify-center font-bold">PP</div>
+          <div class="h-10 w-16 bg-gray-800 rounded text-white text-xs flex items-center justify-center font-bold">APPLE</div>
+          <div class="h-10 w-16 bg-green-600 rounded text-white text-xs flex items-center justify-center font-bold">G PAY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DefaultLayout>
+
+<script>
+  import { userAtom } from '../lib/auth-store.js';
+  
+  function proceedToSnipcartCheckout() {
+    // Pre-fill customer information from the form if available
+    const formData = {
+      email: document.getElementById('email-input')?.value || '',
+      firstName: document.getElementById('first-name-input')?.value || '',
+      lastName: document.getElementById('last-name-input')?.value || '',
+      address1: document.getElementById('street-input')?.value || '',
+      city: document.getElementById('city-input')?.value || '',
+      province: document.getElementById('state-input')?.value || '',
+      postalCode: document.getElementById('postal-code-input')?.value || '',
+      country: document.getElementById('country-input')?.value || '',
+      phone: document.getElementById('phone-input')?.value || ''
+    };
+    
+    console.log('Pre-filling Snipcart with customer data:', formData);
+    
+    // First check if we have any items in cart before proceeding
+    if (!window.Snipcart) {
+      console.error('Snipcart not loaded at all');
+      alert('Payment system not loaded. Please refresh the page and try again.');
+      return;
+    }
+    
+    // Try different approaches to open checkout
+    console.log('Snipcart object available:', !!window.Snipcart);
+    console.log('Snipcart.api available:', !!(window.Snipcart && Snipcart.api));
+    console.log('Snipcart.store available:', !!(window.Snipcart && Snipcart.store));
+    
+    // Method 1: Try direct DOM manipulation approach
+    if (document.querySelector('.snipcart-checkout')) {
+      console.log('Trying direct checkout button click...');
+      const checkoutBtn = document.querySelector('.snipcart-checkout');
+      if (checkoutBtn) {
+        checkoutBtn.click();
+        return;
+      }
+    }
+    
+    // Method 2: Try using Snipcart events to trigger checkout
+    if (window.Snipcart && Snipcart.events) {
+      console.log('Trying to trigger checkout via Snipcart events...');
+      try {
+        Snipcart.events.trigger('modal.show');
+        return;
+      } catch (e) {
+        console.log('Event trigger failed:', e);
+      }
+    }
+    
+    // Method 3: Traditional API approach with better error handling
+    const tryApiCheckout = () => {
+      if (window.Snipcart && Snipcart.api && Snipcart.api.modal) {
+        console.log('Snipcart API ready, opening checkout...');
+        openSnipcartCheckout(formData);
+        return true;
+      }
+      return false;
+    };
+    
+    // Try API immediately
+    if (tryApiCheckout()) return;
+    
+    console.log('Waiting for Snipcart API to be ready...');
+    
+    // Try multiple approaches to ensure we catch when Snipcart is ready
+    let checkoutOpened = false;
+    
+    // Method 4: Listen for the ready event
+    const readyHandler = () => {
+      if (!checkoutOpened && tryApiCheckout()) {
+        console.log('Snipcart ready event received, opening checkout...');
+        checkoutOpened = true;
+        document.removeEventListener('snipcart.ready', readyHandler);
+      }
+    };
+    document.addEventListener('snipcart.ready', readyHandler);
+    
+    // Method 5: Polling with better diagnostics
+    const tryOpenCheckout = (attempt = 1) => {
+      if (checkoutOpened) return;
+      
+      console.log(`Attempt ${attempt} - Checking Snipcart status:`);
+      console.log('  - Snipcart:', !!window.Snipcart);
+      console.log('  - Snipcart.api:', !!(window.Snipcart && Snipcart.api));
+      console.log('  - Snipcart.api.modal:', !!(window.Snipcart && Snipcart.api && Snipcart.api.modal));
+      console.log('  - Snipcart.store:', !!(window.Snipcart && Snipcart.store));
+      
+      if (tryApiCheckout()) {
+        console.log(`Snipcart ready via polling (attempt ${attempt}), opening checkout...`);
+        checkoutOpened = true;
+        document.removeEventListener('snipcart.ready', readyHandler);
+      } else if (attempt < 15) {
+        const delay = Math.min(attempt * 300, 2000); // Cap at 2 seconds
+        console.log(`Snipcart not ready yet, retrying in ${delay}ms (attempt ${attempt})...`);
+        setTimeout(() => tryOpenCheckout(attempt + 1), delay);
+      } else {
+        console.error('Snipcart API failed to initialize after 15 attempts');
+        console.log('Final diagnostic - Snipcart global object:', window.Snipcart);
+        document.removeEventListener('snipcart.ready', readyHandler);
+        alert('Payment system is taking too long to load. Please refresh the page and try again.');
+      }
+    };
+    
+    // Start polling immediately
+    tryOpenCheckout();
+  }
+  
+  function openSnipcartCheckout(customerData) {
+    try {
+      // Double-check that Snipcart API is available
+      if (!window.Snipcart || !Snipcart.api || !Snipcart.api.modal) {
+        console.error('Snipcart API not ready');
+        alert('Payment system not ready. Please wait a moment and try again.');
+        return;
+      }
+      
+      // Check if there are items in the cart
+      let cartItems = [];
+      try {
+        const cartState = Snipcart.store.getState();
+        cartItems = cartState.cart?.items || [];
+      } catch (e) {
+        console.log('Could not check cart state:', e);
+        // Continue anyway - Snipcart will handle empty cart
+      }
+      
+      if (cartItems.length === 0) {
+        console.log('Cart appears empty, redirecting to cart page');
+        alert('Your cart is empty. Please add items before checkout.');
+        window.location.href = '/cart';
+        return;
+      }
+      
+      console.log('Opening Snipcart checkout modal...');
+      console.log('Customer data to pre-fill:', customerData);
+      
+      // Open the Snipcart checkout modal
+      Snipcart.api.modal.show();
+      
+      // Try to pre-fill customer information after modal opens
+      setTimeout(() => {
+        try {
+          if (customerData.email) {
+            // Try to set email in the checkout form
+            const emailField = document.querySelector('[data-snipcart-name="email"]');
+            if (emailField) {
+              emailField.value = customerData.email;
+              console.log('Pre-filled email:', customerData.email);
+            }
+          }
+          
+          // Pre-fill other fields if they exist
+          const fieldMappings = {
+            'first-name': customerData.firstName,
+            'last-name': customerData.lastName,
+            'address1': customerData.address1,
+            'city': customerData.city,
+            'province': customerData.province,
+            'postalCode': customerData.postalCode,
+            'country': customerData.country,
+            'phone': customerData.phone
+          };
+          
+          Object.entries(fieldMappings).forEach(([field, value]) => {
+            if (value) {
+              const fieldElement = document.querySelector(`[data-snipcart-name="${field}"]`);
+              if (fieldElement) {
+                fieldElement.value = value;
+                console.log(`Pre-filled ${field}:`, value);
+              }
+            }
+          });
+        } catch (prefillError) {
+          console.log('Could not pre-fill fields:', prefillError);
+          // This is not critical, so we don't show an alert
+        }
+      }, 500);
+      
+    } catch (error) {
+      console.error('Error opening Snipcart checkout:', error);
+      alert('Error opening checkout. Please try again.');
+    }
+  }
+  
+  // Make functions globally accessible
+  window.proceedToSnipcartCheckout = proceedToSnipcartCheckout;
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load cart data from sessionStorage
+    loadCartData();
+    
+    // Wait for auth to initialize before loading user data
+    setTimeout(() => {
+      loadBasicUserData();
+    }, 100);
+  });
+  
+  function loadBasicUserData() {
+    console.log('Loading basic user data...');
+    const user = userAtom.get();
+    
+    if (user) {
+      console.log('User found:', user.email);
+      // Pre-fill email
+      const emailInput = document.getElementById('email-input');
+      if (emailInput && user.email) {
+        emailInput.value = user.email;
+      }
+      
+      // Pre-fill name if available
+      if (user.user_metadata?.name) {
+        const nameParts = user.user_metadata.name.split(' ');
+        const firstNameInput = document.getElementById('first-name-input');
+        const lastNameInput = document.getElementById('last-name-input');
+        
+        if (firstNameInput) firstNameInput.value = nameParts[0] || '';
+        if (lastNameInput) lastNameInput.value = nameParts.slice(1).join(' ') || '';
+      }
+      
+      // Pre-fill address if available in metadata
+      if (user.user_metadata?.address) {
+        console.log('Loading saved address from user metadata');
+        const address = user.user_metadata.address;
+        
+        const streetInput = document.getElementById('street-input');
+        const cityInput = document.getElementById('city-input');
+        const stateInput = document.getElementById('state-input');
+        const postalCodeInput = document.getElementById('postal-code-input');
+        const countryInput = document.getElementById('country-input');
+        const phoneInput = document.getElementById('phone-input');
+        
+        if (streetInput && address.street) streetInput.value = address.street;
+        if (cityInput && address.city) cityInput.value = address.city;
+        if (stateInput && address.state) stateInput.value = address.state;
+        if (postalCodeInput && address.postal_code) postalCodeInput.value = address.postal_code;
+        if (countryInput && address.country) countryInput.value = address.country;
+        if (phoneInput && address.phone) phoneInput.value = address.phone;
+      }
+    } else {
+      console.log('No user found, showing empty form');
+    }
+  }
+  
+  function loadCartData() {
+    const cartData = sessionStorage.getItem('cartData');
+    
+    if (cartData) {
+      const data = JSON.parse(cartData);
+      displayOrderSummary(data.items, data.total);
+    } else {
+      // Try to get data directly from Snipcart
+      if (window.Snipcart) {
+        if (Snipcart.api) {
+          loadFromSnipcart();
+        } else {
+          document.addEventListener('snipcart.ready', loadFromSnipcart);
+        }
+      } else {
+        showEmptyCartMessage();
+        setTimeout(() => {
+          window.location.href = '/cart';
+        }, 3000);
+      }
+    }
+  }
+  
+  function loadFromSnipcart() {
+    let items = [];
+    let total = 0;
+    
+    // Try to get items using the correct API method
+    try {
+      if (Snipcart.api.cart.items && Snipcart.api.cart.items.all) {
+        items = Snipcart.api.cart.items.all();
+      }
+    } catch (e) {
+      console.log('Error getting items from Snipcart:', e);
+    }
+    
+    // Get total from cart state
+    try {
+      const cartState = Snipcart.store.getState();
+      if (cartState.cart && cartState.cart.total) {
+        total = cartState.cart.total.amount || cartState.cart.total || 0;
+      }
+    } catch (e) {
+      console.log('Error getting total from Snipcart:', e);
+    }
+    
+    console.log('Loading from Snipcart - Items:', items.length, 'Total:', total);
+    
+    if (items.length > 0) {
+      displayOrderSummary(items, total);
+    } else {
+      showEmptyCartMessage();
+      setTimeout(() => {
+        window.location.href = '/cart';
+      }, 3000);
+    }
+  }
+  
+  function displayOrderSummary(items, total) {
+    const itemsContainer = document.getElementById('checkout-items');
+    const totalElement = document.getElementById('checkout-total');
+    
+    // Clear existing items
+    itemsContainer.innerHTML = '';
+    
+    // Add each item
+    items.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'flex items-center space-x-4 p-3 border border-gray-200 dark:border-gray-700 rounded';
+      itemElement.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+        <div class="flex-1">
+          <h4 class="font-medium text-gray-900 dark:text-white">${item.name}</h4>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Qty: ${item.quantity}</p>
+        </div>
+        <div class="text-right">
+          <p class="font-medium text-gray-900 dark:text-white">£${(item.price * item.quantity).toFixed(2)}</p>
+        </div>
+      `;
+      itemsContainer.appendChild(itemElement);
+    });
+    
+    // Update total
+    totalElement.textContent = `£${total.toFixed(2)}`;
+  }
+  
+  function showEmptyCartMessage() {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded max-w-md';
+    notification.innerHTML = `
+      <div class="flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm">No cart data found. Redirecting to cart...</span>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      if (document.body.contains(notification)) {
+        document.body.removeChild(notification);
+      }
+    }, 3000);
+  }
+</script>

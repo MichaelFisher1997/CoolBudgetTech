@@ -1,0 +1,161 @@
+---
+import DefaultLayout from '../../layouts/DefaultLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ProductMediaSlideshow from '../../components/ProductMediaSlideshow';
+import { products, getProductWithMedia } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: { slug: product.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+
+// Find the product by slug
+const baseProduct = products.find(p => p.slug === slug);
+
+// If product not found, return 404
+if (!baseProduct) {
+  throw new Response(null, { status: 404 });
+}
+
+// Get product with media files loaded
+const product = getProductWithMedia(slug);
+
+// If still not found (shouldn't happen), return 404
+if (!product) {
+  throw new Response(null, { status: 404 });
+}
+
+// Get related products (same category, excluding current product)
+const relatedProducts = products
+  .filter(p => p.category === product.category && p.slug !== slug)
+  .slice(0, 4);
+---
+
+<DefaultLayout title={`${product.name} - Cool Budget Tech & Music Store`}>
+  <div class="bg-white dark:bg-gray-900">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <!-- Product -->
+      <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
+        <!-- Media gallery -->
+        <div class="w-full">
+          <ProductMediaSlideshow 
+            media={product.media} 
+            productName={product.name}
+            client:load
+          />
+        </div>
+
+        <!-- Product info -->
+        <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{product.name}</h1>
+
+          <div class="mt-3">
+            <h2 class="sr-only">Product information</h2>
+            <p class="text-3xl tracking-tight text-gray-900 dark:text-white">
+              <span class="currency-symbol">£</span><span class="price-amount" data-price={product.price}>{product.price.toFixed(2)}</span>
+            </p>
+          </div>
+
+          <div class="mt-6">
+            <h3 class="sr-only">Description</h3>
+            <div class="space-y-6 text-base text-gray-700 dark:text-gray-300">
+              <p>{product.description}</p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+              Category: <span class="font-medium">{product.category}</span>
+            </div>
+          </div>
+
+          <form class="mt-6">
+            <button
+              type="button"
+              class="snipcart-add-item flex w-full max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 dark:bg-indigo-500 dark:hover:bg-indigo-600 sm:w-full"
+              data-item-id={product.id}
+              data-item-name={product.name}
+              data-item-price={product.price}
+              data-item-url={`/products/${product.slug}`}
+              data-item-description={product.description}
+              data-item-image={product.media[0]?.url || product.image || `https://placehold.co/600x600/EEE/31343C?font=montserrat&text=${encodeURIComponent(product.name)}`}
+            >
+              Add to Cart
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Related products -->
+      {relatedProducts.length > 0 && (
+        <section class="mt-16 sm:mt-24">
+          <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Related Products</h2>
+          <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {
+              relatedProducts.map((relatedProduct) => (
+                <ProductCard product={relatedProduct} />
+              ))
+            }
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+  
+  <script>
+    // Currency conversion functionality
+    const currencySymbols = {
+      USD: '$',
+      EUR: '€',
+      GBP: '£'
+    };
+
+    const currencyRates = {
+      GBP: 1,
+      USD: 1.27,
+      EUR: 1.17
+    };
+
+    function convertPrice(price, targetCurrency) {
+      const rate = currencyRates[targetCurrency] || 1;
+      return Number((price * rate).toFixed(2));
+    }
+
+    function updateProductCurrency() {
+      const currentCurrency = localStorage.getItem('currency') || 'GBP';
+      const currentSymbol = currencySymbols[currentCurrency] || '£';
+      
+      // Update currency symbols
+      const symbolElements = document.querySelectorAll('.currency-symbol');
+      symbolElements.forEach(el => {
+        el.textContent = currentSymbol;
+      });
+      
+      // Update price amounts
+      const priceElements = document.querySelectorAll('.price-amount');
+      priceElements.forEach(el => {
+        const basePrice = parseFloat(el.dataset.price);
+        if (!isNaN(basePrice)) {
+          const convertedPrice = convertPrice(basePrice, currentCurrency);
+          el.textContent = convertedPrice.toFixed(2);
+        }
+      });
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProductCurrency();
+      
+      // Listen for currency changes
+      window.addEventListener('currency-change', updateProductCurrency);
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'currency') {
+          updateProductCurrency();
+        }
+      });
+    });
+  </script>
+</DefaultLayout>

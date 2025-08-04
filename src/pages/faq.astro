@@ -1,0 +1,315 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+---
+
+<DefaultLayout title="Frequently Asked Questions - CoolBudgetTech" showSidebar={false}>
+  <div class="bg-white dark:bg-gray-900">
+    <div class="mx-auto max-w-4xl px-6 py-16 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          Frequently Asked Questions
+        </h1>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          Find answers to common questions about ordering, shipping, returns, and more.
+        </p>
+      </div>
+
+      <div class="mt-16">
+        <div class="space-y-8">
+          <!-- Shipping Questions -->
+          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">🚚 Shipping & Delivery</h2>
+            
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>How long does shipping take?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Standard delivery takes 3-5 business days within the UK. Express delivery (next day) is available for £4.99. 
+                  International shipping typically takes 7-14 business days depending on your location.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Do you offer free shipping?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Yes! We offer free standard shipping on all orders over £50 within the UK. For orders under £50, 
+                  standard shipping costs £3.99.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Can I track my order?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Absolutely! Once your order ships, you'll receive a tracking number via email. You can also check 
+                  your order status in your account dashboard at any time.
+                </p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Returns & Exchanges -->
+          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">↩️ Returns & Exchanges</h2>
+            
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>What is your return policy?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  We offer a 30-day return policy for most items. Products must be in original condition with all 
+                  packaging and accessories. Some restrictions apply to opened software and personalized items.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>How do I start a return?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Simply log into your account, go to your order history, and click "Return Item" next to the product 
+                  you'd like to return. We'll provide a prepaid return label for your convenience.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>When will I get my refund?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Refunds are processed within 3-5 business days after we receive your returned item. The refund will 
+                  appear on your original payment method within 5-10 business days.
+                </p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Product Questions -->
+          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">📱 Products & Compatibility</h2>
+            
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Are your products genuine/authentic?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Yes, all our products are 100% genuine and sourced directly from manufacturers or authorized distributors. 
+                  We stand behind the authenticity and quality of every item we sell.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Do products come with warranties?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Most electronic products come with manufacturer warranties ranging from 6 months to 2 years. 
+                  Warranty information is listed on each product page. We also offer extended warranty options for certain items.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>How do I know if a product is compatible with my device?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Check the product description for compatibility information. If you're unsure, contact our support team 
+                  with your device model, and we'll help you find the right product.
+                </p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Account & Payment -->
+          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">💳 Account & Payment</h2>
+            
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>What payment methods do you accept?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  We accept all major credit cards (Visa, Mastercard, American Express), PayPal, Apple Pay, Google Pay, 
+                  and bank transfers. All payments are processed securely.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Do I need an account to place an order?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  While you can checkout as a guest, we recommend creating an account to track orders, manage returns, 
+                  save addresses, and receive exclusive offers.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Is my payment information secure?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Absolutely. We use industry-standard SSL encryption and PCI DSS compliant payment processing. 
+                  Your payment information is never stored on our servers.
+                </p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Customer Support -->
+          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">🤝 Customer Support</h2>
+            
+            <div class="space-y-4">
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>How can I contact customer support?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  You can reach us via email at support@coolbudgettech.com, through our contact form, or via our social media channels. 
+                  We typically respond within 24 hours.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>What are your support hours?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Our support team is available Monday-Friday 9:00 AM - 6:00 PM GMT, and Saturday 10:00 AM - 4:00 PM GMT. 
+                  Email support is available 24/7.
+                </p>
+              </details>
+
+              <details class="group">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-900 dark:text-white">
+                  <span>Can you help me choose the right product?</span>
+                  <span class="transition group-open:rotate-180">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </summary>
+                <p class="text-gray-600 dark:text-gray-300 mt-3">
+                  Of course! Our knowledgeable support team can help you find the perfect product for your needs and budget. 
+                  Just contact us with your requirements.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <!-- Still have questions -->
+        <div class="mt-16 bg-indigo-50 dark:bg-indigo-900 rounded-2xl p-8 text-center">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+            Still have questions?
+          </h2>
+          <p class="mt-4 text-gray-600 dark:text-gray-300">
+            Can't find what you're looking for? Our friendly support team is here to help.
+          </p>
+          <div class="mt-6">
+            <a href="/contact" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+              Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DefaultLayout>
+
+<style>
+  details > summary {
+    transition: margin 150ms ease-out;
+  }
+  
+  details[open] > summary {
+    margin-bottom: 12px;
+  }
+  
+  details > summary::marker {
+    display: none;
+  }
+  
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
