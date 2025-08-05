@@ -1,9 +1,9 @@
-# Coolify-optimized Dockerfile using Bun
+# Coolify-optimized Dockerfile using Bun - Static file server
 FROM oven/bun:1-alpine
 
 WORKDIR /app
 
-# Install curl for healthcheck
+# Install curl for healthcheck and a simple HTTP server
 RUN apk add --no-cache curl
 
 # Copy package files
@@ -22,8 +22,9 @@ RUN bun run build
 RUN addgroup --system --gid 1001 astro && \
     adduser --system --uid 1001 astro
 
-# Set ownership
-RUN chown -R astro:astro /app
+# Copy built application and set ownership
+COPY --chown=astro:astro . .
+RUN chown -R astro:astro /app/dist
 USER astro
 
 EXPOSE 4321
@@ -31,5 +32,5 @@ EXPOSE 4321
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:4321/ || exit 1
 
-# Use bun to run the preview server with host binding
-CMD ["bun", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4321"]
+# Use a simple static file server that allows all hosts
+CMD ["sh", "-c", "cd dist && python3 -m http.server 4321 --bind 0.0.0.0 2>/dev/null || node -e \"const http = require('http'), fs = require('fs'), path = require('path'); const server = http.createServer((req, res) => { const filePath = path.join(process.cwd(), req.url === '/' ? 'index.html' : req.url); fs.readFile(filePath, (err, data) => { if (err) { res.writeHead(404); res.end('Not found'); } else { const ext = path.extname(filePath); const contentType = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.svg':'image/svg+xml'}[ext] || 'text/plain'; res.writeHead(200, {'Content-Type': contentType}); res.end(data); } }); }); server.listen(4321, '0.0.0.0'); console.log('Static server running on port 4321');\""]
