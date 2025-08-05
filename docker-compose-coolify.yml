@@ -4,7 +4,7 @@ services:
   astro-store:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.coolify
     ports:
       - "4321:4321"
     environment:
